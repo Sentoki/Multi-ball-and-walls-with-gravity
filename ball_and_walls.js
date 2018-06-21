@@ -1,6 +1,6 @@
 window.onload = function () {
-    var canvas = document.querySelector('canvas');
-    var context = canvas.getContext('2d');
+    window.canvas = document.querySelector('canvas');
+    window.context = canvas.getContext('2d');
 
     window.F = 10;
     window.G = 10;
@@ -13,16 +13,15 @@ window.onload = function () {
         var ball = {
             x: Math.random()*100+20,
             y: Math.random()*100+20,
-            xSpeed: Math.random()*5,
-            ySpeed: Math.random()*2,
+            xSpeed: Math.random()*5+4,
+            ySpeed: Math.random()*2+10,
             color: getRandomColor()
         };
         var newLength = window.balls.push(ball);
     }
     console.log(newLength);
 
-    var fps = 400;
-    setInterval(drawScene, 1000/fps, context);
+    requestAnimationFrame(drawScene);
 };
 
 function getRandomColor() {
@@ -71,11 +70,11 @@ function getNewCoordinateX(currentCoordinate, speed) {
 }
 
 function getSpeedDelta() {
-    // v = a * t
+    // v = a * time
     return window.G * window.timeStep;
 }
 
-function drawScene(context) {
+function drawScene() {
 
     clearCanvas(context);
     drawBorder(context);
@@ -95,4 +94,5 @@ function drawScene(context) {
         }
         drawCircle(context, ball);
     });
+    requestAnimationFrame(drawScene);
 }
